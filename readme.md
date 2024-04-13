@@ -235,12 +235,21 @@ Mac is not intensively tested. Below is an unofficial guideline for using Mac. Y
 
 You can install Fooocus on Apple Mac silicon (M1 or M2) with macOS 'Catalina' or a newer version. Fooocus runs on Apple silicon computers via [PyTorch](https://pytorch.org/get-started/locally/) MPS device acceleration. Mac Silicon computers don't come with a dedicated graphics card, resulting in significantly longer image processing times compared to computers with dedicated graphics cards.
 
-1. Install the conda package manager and pytorch nightly. Read the [Accelerated PyTorch training on Mac](https://developer.apple.com/metal/pytorch/) Apple Developer guide for instructions. Make sure pytorch recognizes your MPS device.
-1. Open the macOS Terminal app and clone this repository with `git clone https://github.com/lllyasviel/Fooocus.git`.
-1. Change to the new Fooocus directory, `cd Fooocus`.
-1. Create a new conda environment, `conda env create -f environment.yaml`.
-1. Activate your new conda environment, `conda activate fooocus`.
-1. Install the packages required by Fooocus, `pip install -r requirements_versions.txt`.
+1. Create virtual environment
+   ```
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+   
+1. Install cython and pyyaml
+   ```
+   pip install "cython<3.0.0" wheel
+   pip install "pyyaml==5.4.1" --no-build-isolation
+   pip install -r requirements.txt
+   ```
+
+1. Install pytorch nightly. Read the [Accelerated PyTorch training on Mac](https://developer.apple.com/metal/pytorch/) Apple Developer guide for instructions. Make sure pytorch recognizes your MPS device.
+
 1. Launch Fooocus by running `python entry_with_update.py`. (Some Mac M2 users may need `python entry_with_update.py --disable-offload-from-vram` to speed up model loading/unloading.) The first time you run Fooocus, it will automatically download the Stable Diffusion SDXL models and will take a significant amount of time, depending on your internet connection.
 
 Use `python entry_with_update.py --preset anime` or `python entry_with_update.py --preset realistic` for Fooocus Anime/Realistic Edition.
